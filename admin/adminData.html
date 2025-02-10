@@ -39,7 +39,7 @@
             padding: 10px;
         }
         .navbar button {
-            background-color: #51160f;
+            background-color: #002d22;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -74,7 +74,7 @@
             text-align: left;
         }
         th {
-            background-color: #51160f;
+            background-color: #002d22;
             color: white;
         }
         .button-group {
@@ -88,14 +88,14 @@
         .button-group button {
             padding: 8px 12px;
             font-size: 14px;
-            background-color: #51160f;
+            background-color: #002d22;
             color: white;
             border-radius: 5px;
             border: none;
             cursor: pointer;
         }
         .toggle-table-btn {
-            background-color: #51160f;
+            background-color: #002d22;
             color: white;
             padding: 8px 15px;
             border-radius: 5px;
@@ -115,12 +115,14 @@
 <body>
     <div class="navbar">
         <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Create</a>
-            <a href="#">Members</a>
+            <a href="adminWinners.php">Home</a>
+            <a href="adminCreation.html">Create</a>
+            <a href="adminData.html">Members</a>
         </div>
         <div class="logout-container">
-            <button>Logout</button>
+            <form method="POST" action="../logout.php">
+                <button type="submit">Logout</button>
+            </form>
         </div>
     </div>
     <div class="container">

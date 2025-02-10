@@ -38,7 +38,7 @@
             padding: 10px;
         }
         .navbar button {
-            background-color: #51160f;
+            background-color: #002d22;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -70,7 +70,7 @@
             border-radius: 5px;
         }
         .form-container button {
-            background-color: #51160f;
+            background-color: #002d22;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -84,12 +84,14 @@
 <body>
     <div class="navbar">
         <div class="nav-links">
-            <a href="adminWinners.html">Home</a>
+            <a href="adminWinners.php">Home</a>
             <a href="adminCreation.html">Create</a>
             <a href="adminData.html">Members</a>
         </div>
         <div class="logout-container">
-            <button>Logout</button>
+            <form method="POST" action="../logout.php">
+                <button type="submit">Logout</button>
+            </form>
         </div>
     </div>
     <div class="container">

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,7 @@
   <nav class="navbar">
     <div class="container">
       <div class="row justify-content-between align-items-center">
-        <input type="checkbox" name="" id="click">
+        <input type="checkbox" id="click">
         <label for="click" class="menu-btn">
           <i class="material-icons">menu</i>
         </label>
@@ -27,8 +26,8 @@
     <div class="container">
       <div class="row full-screen align-items-center">
         <div class="left">
-          <img src="image/pcplogo1.png" alt="logo of pcp" />
-          <img src="image/banner.jpg" alt="logo of pcp" />
+          <img src="image/pcplogo1.png" alt="PCP Logo" />
+          <img src="image/banner.jpg" alt="PCP Banner" />
           <div class="social-media">
             <a href="https://www.facebook.com/pcpofficialpage/"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="https://x.com/pcp1953"><i class="fa-brands fa-x-twitter"></i></a>
@@ -37,63 +36,57 @@
             <a href="https://www.linkedin.com/company/philippine-college-of-physicians/"><i class="fa-brands fa-linkedin-in"></i></a>
           </div>
         </div>
+
         <div class="right">
           <div class="form">
             <div class="text-center">
               <h6><span>DOCTOR</span><span>STAFF</span></h6>
               <input type="checkbox" class="checkbox" id="reg-log">
               <label for="reg-log"></label>
+
               <div class="card-3d-wrap">
                 <div class="card-3d-wrapper">
+                  <!-- First Login Form (Attendee) -->
                   <div class="card-front">
                     <div class="center-wrap">
-                      <h4 class="heading">Log In</h4>
-                      <form action="memberlogin.php" method="POST">
+                      <h4 class="heading">Log In (Member)</h4>
+                      <form action="login/login_member.php" method="POST">
                         <div class="form-group">
                           <input type="text" id="uid" name="uid" placeholder="Enter QR ID or UID" oninput="validateUID()" required>
                         </div>
-
-                        <!-- Hidden input to identify user type as 'member' -->
-                        <input type="hidden" name="user_type" value="member">
-
-                        <!-- Submit button -->
                         <button type="submit" class="btn">Submit</button>
                       </form>
                       <p class="text-center"><a href="#" class="link">Forgot your UID?</a></p>
                     </div>
                   </div>
 
+                  <!-- Second Login Form (Admin) -->
                   <div class="card-back">
                     <div class="center-wrap">
-                      <h4 class="heading">Log In</h4>
-                      <form action="adminlogin.php" method="POST">
+                      <h4 class="heading">Log In (Admin)</h4>
+                      <form id="loginForm">
                         <div class="form-group">
-                          <input type="text" name="UID" class="form-style" placeholder="Enter UID" required>
+                          <input type="text" name="UID" id="UID" class="form-style" placeholder="Enter UID" required>
                           <i class="input-icon material-icons">perm_identity</i>
                         </div>
-
                         <div class="form-group">
-                          <input type="password" name="password" class="form-style" placeholder="Enter Password" required>
+                          <input type="password" name="password" id="password" class="form-style" placeholder="Enter Password" required>
                           <i class="input-icon material-icons">lock</i>
                         </div>
-
                         <button type="submit" class="btn">Login</button>
-                        <?php 
-                        // Display error if any
-                        if (isset($error)) {
-                          echo "<p class='error'>$error</p>";
-                        }
-                        ?>
                       </form>
+                      <p id="errorMessage" style="color: red; display: none;"></p>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                    
+                  </div> <!-- End of card-back -->
+                </div> <!-- End of card-3d-wrapper -->
+              </div> <!-- End of card-3d-wrap -->
+
+            </div> <!-- End of text-center -->
+          </div> <!-- End of form -->
+        </div> <!-- End of right -->
+      </div> <!-- End of row full-screen -->
+    </div> <!-- End of container -->
   </section>
 
   <script>
@@ -112,8 +105,40 @@
       uidInput.value = uidValue;
     }
   </script>
+
 </body>
 
 <footer></footer>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let uid = document.getElementById("UID").value;
+    let password = document.getElementById("password").value;
+    let errorMessage = document.getElementById("errorMessage");
+
+    fetch("login/login_admin.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `UID=${encodeURIComponent(uid)}&password=${encodeURIComponent(password)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = data.redirect; // Redirect if login is successful
+      } else {
+        errorMessage.innerText = data.message;
+        errorMessage.style.display = "block"; // Show error message
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      errorMessage.innerText = "An error occurred. Please try again.";
+      errorMessage.style.display = "block";
+    });
+  });
+</script>
 
 </html>
