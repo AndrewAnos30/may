@@ -1,144 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.12/iconfont/material-icons.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Searchable Table</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow: hidden; /* Prevents body from scrolling */
+        }
+
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #511612;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .navbar .logo {
+            max-height: 30px; /* Adjusted logo size */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-button {
+            background-color: #c9302c;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #a12824;
+        }
+
+        /* Hamburger Menu */
+        .menu-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #511612;
+                width: 150px;
+                padding: 10px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-icon {
+                display: block;
+            }
+        }
+
+        /* Container */
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            margin: 20px auto;
+            flex-grow: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Logo container */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 150px; /* Smaller logo */
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Search bar */
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        /* Table */
+        .table-container {
+            width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* No results message */
+        .no-results {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            padding: 20px;
+        }
+    </style>
 </head>
-
 <body>
-  <nav class="navbar">
-    <div class="container">
-      <div class="row justify-content-between align-items-center">
-        <input type="checkbox" id="click">
-        <label for="click" class="menu-btn">
-          <i class="material-icons">menu</i>
-        </label>
-      </div>
-    </div>
-  </nav>
 
-  <section>
-    <div class="container">
-      <div class="row full-screen align-items-center">
-        <div class="left">
-          <img src="image/pcplogo1.png" alt="PCP Logo" />
-          <img src="image/banner.jpg" alt="PCP Banner" />
-          <div class="social-media">
-            <a href="https://www.facebook.com/pcpofficialpage/"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://x.com/pcp1953"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="https://www.instagram.com/philippinecollegeofphysicians/"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.youtube.com/@philippinecollegeofphysicians"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.linkedin.com/company/philippine-college-of-physicians/"><i class="fa-brands fa-linkedin-in"></i></a>
-          </div>
+    <nav class="navbar">
+        <img src="logo.png" alt="Logo" class="logo">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
         </div>
+        <div class="nav-links">
+            <a href="#"><i class="fas fa-home"></i> Home</a>
+            <a href="#"><i class="fas fa-info-circle"></i> About</a>
+            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+            <button class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </nav>
 
-        <div class="right">
-          <div class="form">
-            <div class="text-center">
-              <h6><span>DOCTOR</span><span>STAFF</span></h6>
-              <input type="checkbox" class="checkbox" id="reg-log">
-              <label for="reg-log"></label>
+    <div class="container">
+        <div class="logo-container">
+            <img src="logo.png" alt="Company Logo">
+        </div>
+        <input type="text" id="searchInput" placeholder="Search by name...">
 
-              <div class="card-3d-wrap">
-                <div class="card-3d-wrapper">
-                  <!-- First Login Form (Attendee) -->
-                  <div class="card-front">
-                    <div class="center-wrap">
-                      <h4 class="heading">Log In (Member)</h4>
-                      <form action="login/login_member.php" method="POST">
-                        <div class="form-group">
-                          <input type="text" id="uid" name="uid" placeholder="Enter QR ID or UID" oninput="validateUID()" required>
-                        </div>
-                        <button type="submit" class="btn">Submit</button>
-                      </form>
-                      <p class="text-center"><a href="#" class="link">Forgot your UID?</a></p>
-                    </div>
-                  </div>
+        <div class="table-container">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>John Doe</td><td>10:00 AM</td></tr>
+                    <tr><td>Jane Smith</td><td>11:30 AM</td></tr>
+                    <tr><td>Alice Johnson</td><td>01:15 PM</td></tr>
+                    <tr><td>Bob Brown</td><td>03:45 PM</td></tr>
+                    <tr><td>John Doe</td><td>10:00 AM</td></tr>
+                    <tr><td>Jane Smith</td><td>11:30 AM</td></tr>
+                    <tr><td>Alice Johnson</td><td>01:15 PM</td></tr>
+                    <tr><td>Bob Brown</td><td>03:45 PM</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="noResults" class="no-results" style="display: none;">No results found.</div>
+    </div>
 
-                  <!-- Second Login Form (Admin) -->
-                  <div class="card-back">
-                    <div class="center-wrap">
-                      <h4 class="heading">Log In (Admin)</h4>
-                      <form id="loginForm">
-                        <div class="form-group">
-                          <input type="text" name="UID" id="UID" class="form-style" placeholder="Enter UID" required>
-                          <i class="input-icon material-icons">perm_identity</i>
-                        </div>
-                        <div class="form-group">
-                          <input type="password" name="password" id="password" class="form-style" placeholder="Enter Password" required>
-                          <i class="input-icon material-icons">lock</i>
-                        </div>
-                        <button type="submit" class="btn">Login</button>
-                      </form>
-                      <p id="errorMessage" style="color: red; display: none;"></p>
-                    </div>
-                    
-                  </div> <!-- End of card-back -->
-                </div> <!-- End of card-3d-wrapper -->
-              </div> <!-- End of card-3d-wrap -->
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        }
 
-            </div> <!-- End of text-center -->
-          </div> <!-- End of form -->
-        </div> <!-- End of right -->
-      </div> <!-- End of row full-screen -->
-    </div> <!-- End of container -->
-  </section>
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchValue = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+            let noResults = true;
 
-  <script>
-    function validateUID() {
-      const uidInput = document.getElementById('uid');
-      let uidValue = uidInput.value;
+            rows.forEach(row => {
+                const name = row.cells[0].textContent.toLowerCase();
+                if (name.includes(searchValue)) {
+                    row.style.display = '';
+                    noResults = false;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
 
-      // Remove any non-digit characters
-      uidValue = uidValue.replace(/\D/g, '');
-
-      // Limit to 11 characters
-      if (uidValue.length > 11) {
-          uidValue = uidValue.slice(0, 11);
-      }
-
-      uidInput.value = uidValue;
-    }
-  </script>
-
+            document.getElementById('noResults').style.display = noResults ? 'block' : 'none';
+        });
+    </script>
 </body>
-
-<footer></footer>
-<script>
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    let uid = document.getElementById("UID").value;
-    let password = document.getElementById("password").value;
-    let errorMessage = document.getElementById("errorMessage");
-
-    fetch("login/login_admin.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `UID=${encodeURIComponent(uid)}&password=${encodeURIComponent(password)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        window.location.href = data.redirect; // Redirect if login is successful
-      } else {
-        errorMessage.innerText = data.message;
-        errorMessage.style.display = "block"; // Show error message
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      errorMessage.innerText = "An error occurred. Please try again.";
-      errorMessage.style.display = "block";
-    });
-  });
-</script>
-
 </html>

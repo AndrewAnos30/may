@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+<body class="h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-3/4 h-4/5 flex shadow-lg rounded-lg overflow-hidden">
+        <!-- Left Image Section -->
+        <div class="w-2/5 bg-cover bg-center" style="background-image: url('banner.jpg');">
+        </div>
+        
+        <!-- Right Login Form Section -->
+        <div class="w-3/5 bg-white flex flex-col justify-center p-10">
+            <h2 class="text-2xl font-semibold mb-2 text-[#013529]">WELCOME!</h2>
+            <p class="text-[#013529] text-sm mb-4">Login to your account</p>
+            <form action="#" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-[#013529]">Username</label>
+                    <input type="text" class="w-full p-2 border rounded" placeholder="Enter username">
+                </div>
+                <div>
+                    <label class="block text-[#013529]">Password</label>
+                    <input type="password" class="w-full p-2 border rounded" placeholder="Enter password">
+                </div>
+                <button class="w-full bg-[#013529] text-white p-2 rounded hover:bg-green-600">Login</button>
+                <a href="#" class="text-[#013529] text-sm block text-center">Forgot Password?</a>
+            </form>
+            
+            <!-- Social Media Icons -->
+            <div class="flex justify-center mt-6 space-x-4">
+                <a href="#" class="text-[#013529] hover:text-blue-600 text-2xl"><i class="fab fa-facebook"></i></a> <!-- Facebook -->
+                <a href="#" class="text-[#013529] hover:text-red-600 text-2xl"><i class="fab fa-youtube"></i></a> <!-- YouTube -->
+                <a href="#" class="text-[#013529] hover:text-blue-400 text-2xl"><i class="fab fa-twitter"></i></a> <!-- Twitter -->
+                <a href="#" class="text-[#013529] hover:text-blue-700 text-2xl"><i class="fab fa-linkedin"></i></a> <!-- LinkedIn -->
+                <a href="#" class="text-[#013529] hover:text-pink-500 text-2xl"><i class="fab fa-instagram"></i></a> <!-- Instagram -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
