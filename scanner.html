@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black;
+            color: white;
+        }
+
+        #reader {
+            width: 90%;
+            max-width: 400px;
+            height: 300px; /* Ensures visibility */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+            background: black;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        #qr-result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="back-button" onclick="goBack()">Back</button>
+    <div id="reader"></div>
+    <div id="qr-result">Scan a QR Code</div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    
+        function onScanSuccess(decodedText) {
+            document.getElementById("qr-result").innerText = "Scanned: " + decodedText;
+        }
+    
+        function onScanFailure(error) {
+            console.warn("Scan failed:", error);
+        }
+    
+        function startScanner(cameraId = null) {
+            let qrScanner = new Html5Qrcode("reader");
+    
+            let config = { fps: 10, qrbox: 250 };
+            let camera = cameraId ? cameraId : undefined;
+    
+            qrScanner.start(camera, config, onScanSuccess, onScanFailure)
+                .catch(err => console.error("Error starting scanner:", err));
+        }
+    
+        function listCameras() {
+            Html5Qrcode.getCameras().then(devices => {
+                if (devices.length > 0) {
+                    let cameraSelect = document.getElementById("cameraSelect");
+                    cameraSelect.innerHTML = ""; // Clear previous options
+    
+                    devices.forEach(device => {
+                        let option = document.createElement("option");
+                        option.value = device.id;
+                        option.innerText = device.label || `Camera ${cameraSelect.length + 1}`;
+                        cameraSelect.appendChild(option);
+                    });
+    
+                    // Start with the first camera
+                    startScanner(devices[0].id);
+                } else {
+                    alert("No cameras found!");
+                }
+            }).catch(err => console.error("Camera error:", err));
+        }
+    
+        // Run camera selection on load
+        window.onload = listCameras;
+    </script>
+    
+</body>
+</html>
